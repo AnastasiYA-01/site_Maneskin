@@ -333,71 +333,370 @@
         }
         
         .calculator {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
+        }
+        
+        /* Новые стили для калькулятора концерта */
+        .calculator-steps {
             background-color: var(--dark-gray);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 2px solid var(--burgundy);
         }
         
-        .form-group {
-            margin-bottom: 20px;
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--dark-gray);
+            border: 2px solid var(--burgundy);
             color: var(--white);
-        }
-        
-        .form-group select, 
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--burgundy);
-            border-radius: 5px;
-            background-color: var(--black);
-            color: var(--white);
-            font-size: 1rem;
-        }
-        
-        .form-group select option {
-            background-color: var(--black);
-        }
-        
-        .calculate-btn {
-            background-color: var(--burgundy);
-            color: var(--white);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active {
+            background-color: var(--burgundy);
+            transform: scale(1.1);
+        }
+        
+        .calculator-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .calculator-step.active {
+            display: block;
+        }
+        
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .option {
+            background-color: var(--black);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         
-        .calculate-btn:hover {
+        .option:hover {
+            border-color: var(--burgundy);
+            transform: translateY(-5px);
+        }
+        
+        .option.selected {
+            border-color: var(--burgundy);
+            background-color: rgba(128, 0, 32, 0.1);
+        }
+        
+        .option-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .option-title {
+            font-weight: bold;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+        
+        .option-desc {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+        
+        .option-price {
+            color: var(--burgundy);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .checkbox {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--black);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox:hover {
+            background-color: rgba(128, 0, 32, 0.1);
+        }
+        
+        .checkbox input {
+            display: none;
+        }
+        
+        .checkmark {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--burgundy);
+            border-radius: 4px;
+            margin-right: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox input:checked + .checkmark {
+            background-color: var(--burgundy);
+        }
+        
+        .checkbox input:checked + .checkmark::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .checkbox-text {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .checkbox-title {
+            font-weight: bold;
+            color: var(--white);
+            margin-right: 10px;
+        }
+        
+        .checkbox-desc {
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+        
+        .checkbox-price {
+            color: var(--burgundy);
+            font-weight: bold;
+        }
+        
+        .quantity-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .quantity-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--burgundy);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity-btn:hover {
             background-color: var(--white);
             color: var(--burgundy);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .quantity-display {
+            min-width: 120px;
+            padding: 10px;
+        }
+        
+        #quantity-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--burgundy);
+            display: block;
+        }
+        
+        .quantity-label {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .quantity-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .quantity-option {
+            padding: 10px 20px;
+            background-color: var(--black);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity-option:hover,
+        .quantity-option.active {
+            background-color: var(--burgundy);
+            color: white;
+        }
+        
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn-prev,
+        .btn-next {
+            padding: 12px 25px;
+            background-color: var(--black);
+            color: white;
+            border: 2px solid var(--burgundy);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-prev:hover,
+        .btn-next:hover {
+            background-color: var(--burgundy);
+        }
+        
+        .summary {
+            background-color: var(--black);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--burgundy);
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid var(--burgundy);
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ccc;
+            font-size: 1.1rem;
         }
         
         .result {
             margin-top: 20px;
-            padding: 15px;
-            background-color: rgba(128, 0, 32, 0.2);
-            border-left: 4px solid var(--burgundy);
+            padding: 25px;
+            background-color: rgba(128, 0, 32, 0.1);
+            border: 2px solid var(--burgundy);
+            border-radius: 10px;
             display: none;
             animation: fadeIn 0.5s ease;
             color: var(--white);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .concert-emoji {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .result-details {
+            line-height: 1.8;
+        }
+        
+        .price-breakdown {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .price-breakdown p {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .price-breakdown .total {
+            border-top: 1px solid var(--burgundy);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .concert-tip {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: rgba(128, 0, 32, 0.2);
+            border-left: 3px solid var(--burgundy);
+            font-style: italic;
+        }
+        
+        .reset-btn {
+            background-color: transparent;
+            color: var(--burgundy);
+            border: 2px solid var(--burgundy);
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+        }
+        
+        .reset-btn:hover {
+            background-color: var(--burgundy);
+            color: white;
         }
         
         footer {
@@ -473,7 +772,7 @@
         
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
         
@@ -528,6 +827,20 @@
             
             .timeline-steps::before {
                 display: none;
+            }
+            
+            .option-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .step-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn-prev,
+            .btn-next {
+                width: 100%;
             }
             
             /* Анимация бургер-меню */
@@ -670,34 +983,162 @@
 
     <section class="calculator-section">
         <div class="container">
-            <h2>Калькулятор стоимости мерча</h2>
+            <h2>Генератор идеального концерта Måneskin</h2>
+            <p class="subtitle">Создайте свой уникальный концертный опыт и рассчитайте примерную стоимость</p>
+            
             <div class="calculator">
-                <form id="merch-calculator">
-                    <div class="form-group">
-                        <label for="product">Выберите товар:</label>
-                        <select id="product" name="product">
-                            <option value="30">Футболка - 30€</option>
-                            <option value="25">Кепка - 25€</option>
-                            <option value="40">Толстовка - 40€</option>
-                            <option value="20">Плакат - 20€</option>
-                            <option value="15">Браслет - 15€</option>
-                        </select>
+                <div class="calculator-steps">
+                    <div class="step-indicator">
+                        <div class="step active" data-step="1">1</div>
+                        <div class="step" data-step="2">2</div>
+                        <div class="step" data-step="3">3</div>
+                        <div class="step" data-step="4">4</div>
                     </div>
-                    <div class="form-group">
-                        <label for="quantity">Количество:</label>
-                        <input type="number" id="quantity" name="quantity" min="1" value="1">
+                    
+                    <form id="concert-calculator">
+                        <!-- Шаг 1: Выбор типа билета -->
+                        <div class="calculator-step active" id="step-1">
+                            <h3>Выберите тип билета</h3>
+                            <div class="option-grid">
+                                <div class="option" data-value="50">
+                                    <div class="option-icon">🎫</div>
+                                    <div class="option-title">STANDING</div>
+                                    <div class="option-desc">Партер, танцпол</div>
+                                    <div class="option-price">50€</div>
+                                </div>
+                                <div class="option" data-value="80">
+                                    <div class="option-icon">🪑</div>
+                                    <div class="option-title">SEATED</div>
+                                    <div class="option-desc">Сидячие места</div>
+                                    <div class="option-price">80€</div>
+                                </div>
+                                <div class="option" data-value="120">
+                                    <div class="option-icon">⭐</div>
+                                    <div class="option-title">VIP</div>
+                                    <div class="option-desc">Премиум + мерч</div>
+                                    <div class="option-price">120€</div>
+                                </div>
+                                <div class="option" data-value="200">
+                                    <div class="option-icon">👑</div>
+                                    <div class="option-title">MEET & GREET</div>
+                                    <div class="option-desc">Встреча с группой</div>
+                                    <div class="option-price">200€</div>
+                                </div>
+                            </div>
+                            <div class="step-navigation">
+                                <button type="button" class="btn-next">Далее →</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Шаг 2: Дополнительные опции -->
+                        <div class="calculator-step" id="step-2">
+                            <h3>Дополнительные опции</h3>
+                            <div class="checkboxes">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="transport" value="15">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        <span class="checkbox-title">Трансфер до концерта</span>
+                                        <span class="checkbox-desc">Автобус от центра города</span>
+                                        <span class="checkbox-price">+15€</span>
+                                    </span>
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="early" value="10">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        <span class="checkbox-title">Ранний вход</span>
+                                        <span class="checkbox-desc">Вход за 30 минут до всех</span>
+                                        <span class="checkbox-price">+10€</span>
+                                    </span>
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="parking" value="20">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        <span class="checkbox-title">Парковка Premium</span>
+                                        <span class="checkbox-desc">Зарезервированное место</span>
+                                        <span class="checkbox-price">+20€</span>
+                                    </span>
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="insurance" value="5">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        <span class="checkbox-title">Страховка билета</span>
+                                        <span class="checkbox-desc">Возврат при отмене</span>
+                                        <span class="checkbox-price">+5€</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="step-navigation">
+                                <button type="button" class="btn-prev">← Назад</button>
+                                <button type="button" class="btn-next">Далее →</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Шаг 3: Количество билетов -->
+                        <div class="calculator-step" id="step-3">
+                            <h3>Количество билетов</h3>
+                            <div class="quantity-selector">
+                                <div class="quantity-control">
+                                    <button type="button" class="quantity-btn minus">−</button>
+                                    <div class="quantity-display">
+                                        <span id="quantity-value">1</span>
+                                        <span class="quantity-label">билет</span>
+                                    </div>
+                                    <button type="button" class="quantity-btn plus">+</button>
+                                </div>
+                                <div class="quantity-options">
+                                    <div class="quantity-option" data-quantity="1">Соло</div>
+                                    <div class="quantity-option" data-quantity="2">Пара</div>
+                                    <div class="quantity-option" data-quantity="4">Группа</div>
+                                    <div class="quantity-option" data-quantity="6">Компания</div>
+                                </div>
+                            </div>
+                            <div class="step-navigation">
+                                <button type="button" class="btn-prev">← Назад</button>
+                                <button type="button" class="btn-next">Далее →</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Шаг 4: Итог -->
+                        <div class="calculator-step" id="step-4">
+                            <h3>Итоговая стоимость</h3>
+                            <div class="summary">
+                                <div class="summary-item">
+                                    <span>Тип билета:</span>
+                                    <span id="summary-ticket">Не выбран</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Дополнительные опции:</span>
+                                    <span id="summary-options">Нет</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Количество:</span>
+                                    <span id="summary-quantity">1 билет</span>
+                                </div>
+                                <div class="summary-total">
+                                    <span>Общая стоимость:</span>
+                                    <span id="total-price">0€</span>
+                                </div>
+                            </div>
+                            <div class="step-navigation">
+                                <button type="button" class="btn-prev">← Назад</button>
+                                <button type="button" class="calculate-btn">Рассчитать</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="result" class="result">
+                    <div class="result-header">
+                        <h3>Ваш идеальный концерт готов! 🎸</h3>
+                        <div class="concert-emoji">🔥</div>
                     </div>
-                    <div class="form-group">
-                        <label for="shipping">Способ доставки:</label>
-                        <select id="shipping" name="shipping">
-                            <option value="5">Стандартная доставка - 5€</option>
-                            <option value="10">Экспресс-доставка - 10€</option>
-                            <option value="0">Самовывоз - 0€</option>
-                        </select>
-                    </div>
-                    <button type="button" id="calculate" class="calculate-btn">Рассчитать стоимость</button>
-                </form>
-                <div id="result" class="result"></div>
+                    <div id="result-content"></div>
+                    <button id="reset-calculator" class="reset-btn">Создать новый</button>
+                </div>
             </div>
         </div>
     </section>
@@ -756,44 +1197,261 @@
             });
         });
         
-        // Калькулятор стоимости мерча
-        document.getElementById('calculate').addEventListener('click', function() {
-            // Анимация кнопки
-            this.classList.add('animating');
-            setTimeout(() => {
-                this.classList.remove('animating');
-            }, 500);
+        // Новый калькулятор концерта
+        let currentStep = 1;
+        let selectedTicket = null;
+        let selectedOptions = [];
+        let ticketQuantity = 1;
+        
+        // Инициализация калькулятора
+        function initConcertCalculator() {
+            // Шаг 1: Выбор типа билета
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedTicket = {
+                        name: this.querySelector('.option-title').textContent,
+                        price: parseFloat(this.dataset.value)
+                    };
+                    
+                    // Обновляем итоговую информацию сразу
+                    if (currentStep === 4) {
+                        updateSummary();
+                    }
+                });
+            });
             
-            // Получение значений из формы
-            const productPrice = parseFloat(document.getElementById('product').value);
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const shippingCost = parseFloat(document.getElementById('shipping').value);
+            // Шаг 2: Чекбоксы
+            document.querySelectorAll('.checkbox input').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const optionName = this.parentElement.querySelector('.checkbox-title').textContent;
+                    const optionPrice = parseFloat(this.value);
+                    
+                    if (this.checked) {
+                        selectedOptions.push({
+                            name: optionName,
+                            price: optionPrice
+                        });
+                    } else {
+                        selectedOptions = selectedOptions.filter(opt => 
+                            opt.name !== optionName
+                        );
+                    }
+                    
+                    // Обновляем итоговую информацию сразу
+                    if (currentStep === 4) {
+                        updateSummary();
+                    }
+                });
+            });
             
-            // Проверка валидности количества
-            if (isNaN(quantity) || quantity < 1) {
-                alert('Пожалуйста, введите корректное количество');
+            // Шаг 3: Количество
+            document.querySelector('.quantity-btn.minus').addEventListener('click', () => {
+                if (ticketQuantity > 1) {
+                    ticketQuantity--;
+                    updateQuantityDisplay();
+                    if (currentStep === 4) {
+                        updateSummary();
+                    }
+                }
+            });
+            
+            document.querySelector('.quantity-btn.plus').addEventListener('click', () => {
+                if (ticketQuantity < 10) {
+                    ticketQuantity++;
+                    updateQuantityDisplay();
+                    if (currentStep === 4) {
+                        updateSummary();
+                    }
+                }
+            });
+            
+            document.querySelectorAll('.quantity-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    ticketQuantity = parseInt(this.dataset.quantity);
+                    updateQuantityDisplay();
+                    document.querySelectorAll('.quantity-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    if (currentStep === 4) {
+                        updateSummary();
+                    }
+                });
+            });
+            
+            // Навигация по шагам
+            document.querySelectorAll('.btn-next').forEach(btn => {
+                btn.addEventListener('click', nextStep);
+            });
+            
+            document.querySelectorAll('.btn-prev').forEach(btn => {
+                btn.addEventListener('click', prevStep);
+            });
+            
+            // Кнопка расчета
+            document.querySelector('#step-4 .calculate-btn').addEventListener('click', calculateConcert);
+            
+            // Кнопка сброса
+            document.getElementById('reset-calculator').addEventListener('click', resetCalculator);
+        }
+        
+        function updateQuantityDisplay() {
+            document.getElementById('quantity-value').textContent = ticketQuantity;
+            document.querySelector('.quantity-label').textContent = ticketQuantity === 1 ? 'билет' : 
+                ticketQuantity >= 5 ? 'билетов' : 'билета';
+        }
+        
+        function nextStep() {
+            if (currentStep < 4) {
+                // Валидация текущего шага
+                if (currentStep === 1 && !selectedTicket) {
+                    alert('Пожалуйста, выберите тип билета');
+                    return;
+                }
+                
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+                
+                currentStep++;
+                
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+                
+                // Обновляем итоговую информацию на шаге 4
+                if (currentStep === 4) {
+                    updateSummary();
+                }
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+                
+                currentStep--;
+                
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+            }
+        }
+        
+        function updateSummary() {
+            if (selectedTicket) {
+                document.getElementById('summary-ticket').textContent = `${selectedTicket.name} - ${selectedTicket.price}€`;
+            } else {
+                document.getElementById('summary-ticket').textContent = 'Не выбран';
+            }
+            
+            if (selectedOptions.length > 0) {
+                const optionsText = selectedOptions.map(opt => opt.name).join(', ');
+                document.getElementById('summary-options').textContent = optionsText;
+            } else {
+                document.getElementById('summary-options').textContent = 'Нет';
+            }
+            
+            document.getElementById('summary-quantity').textContent = `${ticketQuantity} ${ticketQuantity === 1 ? 'билет' : 
+                ticketQuantity >= 5 ? 'билетов' : 'билета'}`;
+                
+            // Предварительный расчет для отображения
+            if (selectedTicket) {
+                const ticketTotal = selectedTicket.price * ticketQuantity;
+                const optionsTotal = selectedOptions.reduce((sum, opt) => sum + opt.price, 0) * ticketQuantity;
+                const totalCost = ticketTotal + optionsTotal;
+                document.getElementById('total-price').textContent = `${totalCost}€`;
+            }
+        }
+        
+        function calculateConcert() {
+            if (!selectedTicket) {
+                alert('Пожалуйста, выберите тип билета');
                 return;
             }
             
+            // Анимация кнопки
+            const btn = document.querySelector('#step-4 .calculate-btn');
+            btn.classList.add('animating');
+            setTimeout(() => {
+                btn.classList.remove('animating');
+            }, 500);
+            
             // Расчет стоимости
-            const subtotal = productPrice * quantity;
-            const total = subtotal + shippingCost;
+            const ticketTotal = selectedTicket.price * ticketQuantity;
+            const optionsTotal = selectedOptions.reduce((sum, opt) => sum + opt.price, 0) * ticketQuantity;
+            const totalCost = ticketTotal + optionsTotal;
             
-            // Отображение результата
-            const resultElement = document.getElementById('result');
-            resultElement.innerHTML = `
-                <h3>Результат расчета:</h3>
-                <p>Стоимость товаров: ${subtotal.toFixed(2)}€</p>
-                <p>Стоимость доставки: ${shippingCost.toFixed(2)}€</p>
-                <p><strong>Итого: ${total.toFixed(2)}€</strong></p>
+            // Генерируем описание концерта
+            const concertTypes = {
+                'STANDING': 'энергичный концерт в толпе',
+                'SEATED': 'комфортный просмотр с лучшим звуком',
+                'VIP': 'эксклюзивный опыт с мерчем',
+                'MEET & GREET': 'незабываемая встреча с группой'
+            };
+            
+            const emojis = ['🎸', '🔥', '⭐', '🎤', '🤘', '🎶', '✨'];
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            const personWord = ticketQuantity === 1 ? 'человека' : ticketQuantity >= 5 ? 'человек' : 'человеки';
+            
+            const resultHTML = `
+                <div class="result-details">
+                    <p><strong>Вы создали идеальный концерт Måneskin!</strong></p>
+                    <p>Вы выбрали <strong>${selectedTicket.name}</strong> билеты для ${ticketQuantity} ${personWord}.</p>
+                    <p>Это будет ${concertTypes[selectedTicket.name] || 'незабываемое шоу'}!</p>
+                    ${selectedOptions.length > 0 ? 
+                        `<p>Дополнительные опции: ${selectedOptions.map(opt => opt.name).join(', ')}</p>` : 
+                        ''}
+                    <div class="price-breakdown">
+                        <p>Билеты: ${ticketTotal}€</p>
+                        ${optionsTotal > 0 ? `<p>Доп. опции: ${optionsTotal}€</p>` : ''}
+                        <p class="total"><strong>Итого: ${totalCost}€</strong></p>
+                    </div>
+                    <p class="concert-tip">${randomEmoji} Совет: Приходите за час до начала, чтобы занять лучшие места!</p>
+                </div>
             `;
-            resultElement.style.display = 'block';
             
-            // Анимация появления результата
+            // Показываем результат
+            document.getElementById('result-content').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            
+            // Прокрутка к результату
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Анимация появления
+            const resultElement = document.getElementById('result');
             resultElement.style.animation = 'none';
             setTimeout(() => {
                 resultElement.style.animation = 'fadeIn 0.5s ease';
             }, 10);
+        }
+        
+        function resetCalculator() {
+            currentStep = 1;
+            selectedTicket = null;
+            selectedOptions = [];
+            ticketQuantity = 1;
+            
+            // Сбрасываем UI
+            document.querySelectorAll('.calculator-step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step-1').classList.add('active');
+            
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.querySelector('.step[data-step="1"]').classList.add('active');
+            
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.checkbox input').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.quantity-option').forEach(opt => opt.classList.remove('active'));
+            
+            updateQuantityDisplay();
+            document.getElementById('result').style.display = 'none';
+            updateSummary();
+        }
+        
+        // Инициализация калькулятора при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            initConcertCalculator();
+            updateQuantityDisplay();
+            updateSummary();
         });
     </script>
 </body>
